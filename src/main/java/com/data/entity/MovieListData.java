@@ -19,7 +19,7 @@ public class MovieListData
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int movieId;
+    private Integer movieId;
     @Column(name = "movie_name")
     private String movieName;
 
@@ -40,4 +40,5 @@ public class MovieListData
 
     @Column(name = "movie_uri")
     private String movieUri;
+
 }

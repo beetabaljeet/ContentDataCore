@@ -5,9 +5,11 @@ package com.data.rest;
 import com.data.dataservice.ContentCoreService;
 import com.data.entity.MovieListData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -25,6 +27,18 @@ public class restcontroller
          return contentCoreService.getAllMovieList();
     }
 
+    @GetMapping(value = "/get_new_movie_list_stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<MovieListData> getCoreNewMovieStream()
+    {
+        return contentCoreService.getMovieListDataStream();
+    }
+
+
+    @GetMapping(value = "video/{title}", produces = "video/mp4")
+    public Mono<Resource> getVideo(@PathVariable String title)
+    {
+        return contentCoreService.playMovieFromS3Storage(title);
+    }
 
 
 }
